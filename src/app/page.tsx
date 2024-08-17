@@ -1,11 +1,12 @@
 import React from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { SearchBar } from '@/components/Search';
+import { Location } from '@/components/Location';
 // import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <Container maxWidth="md" sx={{ textAlign: 'center', mt: 4 }}>
+    <Container maxWidth="lg" sx={{ textAlign: 'center', mt: 4 }}>
       <Box mb={4}>
         {/* <Typography variant="h2" gutterBottom>
           Bitewheel
@@ -14,7 +15,10 @@ export default function HomePage() {
           Discover Local Dining Spots with a Spin
         </Typography>
       </Box>
-      <SearchBar />
+      <Box mb={4}>
+        <SearchBar />
+      </Box>
+      <Location />
     </Container>
   );
 }
