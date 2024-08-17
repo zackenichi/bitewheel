@@ -12,11 +12,12 @@
     "@emotion/cache": "latest",
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
-    "@mui/icons-material": "next",
-    "@mui/material": "next",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.0",
     "@mui/material-nextjs": "next",
+    "@react-google-maps/api": "^2.19.3",
     "next": "latest",
-    "react": "latest",
+    "react": "^18.2.0",
     "react-dom": "latest"
   },
   "devDependencies": {
