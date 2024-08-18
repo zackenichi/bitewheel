@@ -48,6 +48,9 @@ const Location: React.FC = () => {
 
   const { latitude, longitude } = position.coords;
 
+  console.log('latitude:', latitude);
+  console.log('longitude:', longitude);
+
   return (
     <Container>
       <div style={{ height: '500px', width: '100%' }}>
