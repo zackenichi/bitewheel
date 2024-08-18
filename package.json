@@ -18,9 +18,11 @@
     "@react-google-maps/api": "^2.19.3",
     "next": "latest",
     "react": "^18.2.0",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "use-places-autocomplete": "^4.0.1"
   },
   "devDependencies": {
+    "@types/google.maps": "^3.55.12",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
