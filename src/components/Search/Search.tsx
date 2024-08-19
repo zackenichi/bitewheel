@@ -9,6 +9,8 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import SearchIcon from '@mui/icons-material/Search';
+import { useDispatch } from 'react-redux';
+import { setSelectedPlace } from '@/store/map'; // Import the action
 
 const SEARCH_ENDPOINT = '/api/autocomplete'; // Updated endpoint
 const GEOCODE_ENDPOINT = '/api/geocode'; // Endpoint to get formatted address
@@ -16,12 +18,20 @@ const GEOCODE_ENDPOINT = '/api/geocode'; // Endpoint to get formatted address
 interface OptionType {
   place_id: string;
   description: string;
+  geometry: {
+    location: {
+      lat: number;
+      lng: number;
+    };
+  };
 }
 
 const SearchBar: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>(''); // For text input
   const [options, setOptions] = useState<OptionType[]>([]); // For autocomplete options
   const [selectedValue, setSelectedValue] = useState<OptionType | null>(null); // For selected option
+  const [open, setOpen] = useState<boolean>(false); // State to manage dropdown open/close
+  const dispatch = useDispatch(); // Initialize dispatch
 
   // Function to get current location and set it as input value
   const setCurrentLocation = async () => {
@@ -35,13 +45,26 @@ const SearchBar: React.FC = () => {
               `${GEOCODE_ENDPOINT}?lat=${latitude}&lng=${longitude}`
             );
             const data = await response.json();
-            console.log('Geocode API response:', data); // Debugging
+
             if (data.formattedAddress) {
               setInputValue(data.formattedAddress);
               setSelectedValue({
-                place_id: '',
+                place_id: '', // If you have a place_id from the API, use it here
                 description: data.formattedAddress,
+                geometry: {
+                  location: {
+                    lat: latitude,
+                    lng: longitude,
+                  },
+                },
               }); // Set selected value
+              dispatch(
+                setSelectedPlace({
+                  lat: latitude,
+                  lng: longitude,
+                  name: data.formattedAddress,
+                })
+              ); // Update Redux state
             } else {
               console.error('No formatted address found in response');
             }
@@ -88,12 +111,37 @@ const SearchBar: React.FC = () => {
     []
   );
 
-  const handleOptionChange = (
+  const handleOptionChange = async (
     event: React.SyntheticEvent,
     value: OptionType | null
   ) => {
-    setSelectedValue(value);
-    setInputValue(value ? value.description : ''); // Update the text in the search bar with the place name
+    if (value) {
+      setInputValue(value.description);
+      setSelectedValue(value);
+
+      // Fetch detailed place information using place_id
+      const response = await fetch(
+        `/api/placeDetails?placeId=${value.place_id}`
+      );
+      const placeDetails = await response.json();
+
+      if (placeDetails.geometry) {
+        dispatch(
+          setSelectedPlace({
+            lat: placeDetails.geometry.location.lat,
+            lng: placeDetails.geometry.location.lng,
+            name: value.description,
+          })
+        );
+      } else {
+        console.error('Failed to fetch geometry data');
+      }
+    }
+    // else {
+    //   setInputValue('');
+    //   setSelectedValue(null);
+    //   dispatch(setSelectedPlace(null));
+    // }
   };
 
   return (
@@ -107,8 +155,11 @@ const SearchBar: React.FC = () => {
       <Grid item xs={12} sm={8} md={9}>
         <Autocomplete
           options={options}
-          getOptionLabel={(option) => option.description}
-          value={selectedValue} // Use value to manage selected option
+          getOptionLabel={(option) => option.description || ''} // Ensure a string is returned
+          value={selectedValue || null} // Handle value for the dropdown
+          open={open} // Control whether the dropdown is open
+          onOpen={() => setOpen(true)} // Set open to true when dropdown opens
+          onClose={() => setOpen(false)} // Set open to false when dropdown closes
           renderInput={(params) => (
             <TextField
               {...params}
@@ -137,6 +188,8 @@ const SearchBar: React.FC = () => {
           onInputChange={handleInputChange}
           onChange={handleOptionChange}
           isOptionEqualToValue={(option, value) =>
+            value !== null &&
+            value !== undefined &&
             option.place_id === value.place_id
           }
         />
