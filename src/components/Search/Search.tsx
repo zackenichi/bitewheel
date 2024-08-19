@@ -9,8 +9,11 @@ import {
 } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import SearchIcon from '@mui/icons-material/Search';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedPlace } from '@/store/map'; // Import the action
+import _debounce from 'lodash/debounce';
+import { RootState } from '@/store'; // Import RootState type
+import Link from 'next/link';
 
 const SEARCH_ENDPOINT = '/api/autocomplete'; // Updated endpoint
 const GEOCODE_ENDPOINT = '/api/geocode'; // Endpoint to get formatted address
@@ -32,6 +35,9 @@ const SearchBar: React.FC = () => {
   const [selectedValue, setSelectedValue] = useState<OptionType | null>(null); // For selected option
   const [open, setOpen] = useState<boolean>(false); // State to manage dropdown open/close
   const dispatch = useDispatch(); // Initialize dispatch
+  const selectedPlace = useSelector(
+    (state: RootState) => state.map.selectedPlace
+  ); // Access selectedPlace from Redux state
 
   // Function to get current location and set it as input value
   const setCurrentLocation = async () => {
@@ -39,7 +45,9 @@ const SearchBar: React.FC = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`); // Debugging
+
+          console.log('Current location:', latitude, longitude);
+
           try {
             const response = await fetch(
               `${GEOCODE_ENDPOINT}?lat=${latitude}&lng=${longitude}`
@@ -82,9 +90,24 @@ const SearchBar: React.FC = () => {
   };
 
   useEffect(() => {
-    // Set current location when component mounts
-    setCurrentLocation();
-  }, []);
+    // If no selectedPlace in Redux state, set the current location
+    if (!selectedPlace) {
+      setCurrentLocation();
+    } else {
+      // If selectedPlace is available, set it in the component state
+      setInputValue(selectedPlace.name);
+      setSelectedValue({
+        place_id: '', // If you have a place_id, use it here
+        description: selectedPlace.name,
+        geometry: {
+          location: {
+            lat: selectedPlace.lat,
+            lng: selectedPlace.lng,
+          },
+        },
+      });
+    }
+  }, [selectedPlace]); // Add selectedPlace as a dependency
 
   const handleInputChange = useCallback(
     async (event: React.ChangeEvent<{}>, value: string) => {
@@ -97,7 +120,7 @@ const SearchBar: React.FC = () => {
       try {
         const response = await fetch(`${SEARCH_ENDPOINT}?input=${value}`);
         const data = await response.json();
-        console.log('Autocomplete API response:', data); // Debugging
+
         if (data.predictions) {
           setOptions(data.predictions); // Ensure your API returns predictions in this format
         } else {
@@ -137,11 +160,6 @@ const SearchBar: React.FC = () => {
         console.error('Failed to fetch geometry data');
       }
     }
-    // else {
-    //   setInputValue('');
-    //   setSelectedValue(null);
-    //   dispatch(setSelectedPlace(null));
-    // }
   };
 
   return (
@@ -195,7 +213,13 @@ const SearchBar: React.FC = () => {
         />
       </Grid>
       <Grid item>
-        <Button variant="contained" color="primary" startIcon={<SearchIcon />}>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<SearchIcon />}
+          LinkComponent={Link}
+          href="search"
+        >
           Find Food
         </Button>
       </Grid>

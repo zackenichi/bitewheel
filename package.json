@@ -17,6 +17,7 @@
     "@mui/material-nextjs": "next",
     "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.7",
+    "lodash": "^4.17.21",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "latest",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/google.maps": "^3.55.12",
+    "@types/lodash": "^4.17.7",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
