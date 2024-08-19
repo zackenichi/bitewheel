@@ -24,6 +24,7 @@ export async function GET(request: Request) {
         data.results[0]?.formatted_address || 'Address not found';
       return NextResponse.json({ formattedAddress });
     } else {
+      console.error('Geocoding API error:', data.error_message);
       return NextResponse.json(
         { error: 'Failed to fetch address' },
         { status: 500 }
