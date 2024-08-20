@@ -13,7 +13,7 @@
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.0",
+    "@mui/material": "^5.16.7",
     "@mui/material-nextjs": "next",
     "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.7",

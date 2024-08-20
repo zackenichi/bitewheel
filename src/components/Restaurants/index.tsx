@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { CardDivider, StyledCard } from '../UI';
 import { Restaurant } from '@/resources/interfaces/restaurant';
-import { ScrollWrap } from '../ScrollWrap';
+import ScrollWrap from '@/components/ScrollWrap';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -187,4 +187,4 @@ const Restaurants: React.FC<RestaurantsProps> = ({ restaurants }) => {
   );
 };
 
-export { Restaurants };
+export default Restaurants;

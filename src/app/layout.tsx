@@ -4,7 +4,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme';
-import { Header } from '@/components/Header';
+import Header from '@/components/Header';
 import { Provider } from 'react-redux';
 import { store } from '@/store'; // Adjust the path according to your structure
 

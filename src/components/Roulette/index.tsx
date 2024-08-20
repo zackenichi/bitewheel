@@ -16,14 +16,26 @@ const Restaurants = dynamic(() => import('@/components/Restaurants'), {
   ssr: false,
 });
 const Roulette = dynamic(() => import('@/components/Roulette'), { ssr: false });
-const EmptyList = dynamic(() => import('@/components/UI/'), { ssr: false });
-const LinearBuffer = dynamic(() => import('@/components/UI/'), { ssr: false });
+const EmptyList = dynamic(
+  () => import('@/components/UI').then((mod) => mod.EmptyList),
+  {
+    ssr: false,
+  }
+);
+const LinearBuffer = dynamic(
+  () => import('@/components/UI').then((mod) => mod.LinearBuffer),
+  {
+    ssr: false,
+  }
+);
 const SelectedRestaurant = dynamic(
   () =>
     import('@/components/SelectedRestaurant').then(
       (mod) => mod.SelectedRestaurant
     ),
-  { ssr: false }
+  {
+    ssr: false,
+  }
 );
 
 export default function SearchPage() {
