@@ -1,14 +1,14 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Grid, Typography } from '@mui/material';
 import { SearchBar } from '@/components/Search';
 import { Restaurants } from '@/components/Restaurants';
 import { setRestaurants } from '@/store/restaurant';
 import { RootState } from '@/store';
-import { Restaurant } from '@/resources/interfaces/restaurant';
-
-// Define the interface for the API response
+import { Roulette } from '@/components/Roulette';
+import { EmptyList, LinearBuffer } from '@/components/UI';
+import { SelectedRestaurant } from '@/components/SelectedRestaurant';
 
 export default function SearchPage() {
   const dispatch = useDispatch();
@@ -57,19 +57,37 @@ export default function SearchPage() {
         <Grid item xs={12}>
           <SearchBar />
         </Grid>
-        <Grid item xs={12} md={8}>
-          <Typography variant="h4">Roulette</Typography>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          {loading ? (
-            <Typography>Loading...</Typography>
-          ) : error ? (
-            <Typography color="error">{error}</Typography>
-          ) : (
-            <Restaurants restaurants={restaurants} />
-          )}
-        </Grid>
+        {restaurants.length === 0 && !loading ? (
+          <EmptyList />
+        ) : (
+          <Fragment>
+            {loading && (
+              <Grid item xs={12}>
+                <LinearBuffer />
+              </Grid>
+            )}
+            {!loading && (
+              <>
+                <Grid item xs={12} md={8}>
+                  {error ? (
+                    <Typography color="error">{error}</Typography>
+                  ) : (
+                    <Roulette />
+                  )}
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  {error ? (
+                    <Typography color="error">{error}</Typography>
+                  ) : (
+                    <Restaurants restaurants={restaurants} />
+                  )}
+                </Grid>
+              </>
+            )}
+          </Fragment>
+        )}
       </Grid>
+      <SelectedRestaurant />
     </Container>
   );
 }
