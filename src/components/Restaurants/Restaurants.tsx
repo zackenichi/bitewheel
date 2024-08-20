@@ -1,4 +1,5 @@
 import {
+  Button,
   Grid,
   IconButton,
   Rating,
@@ -12,12 +13,15 @@ import { Restaurant } from '@/resources/interfaces/restaurant';
 import { ScrollWrap } from '../ScrollWrap';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeRestaurant, setView } from '@/store/restaurant';
+import {
+  removeRestaurant,
+  setView,
+  shuffleRestaurants,
+} from '@/store/restaurant';
 import ListIcon from '@mui/icons-material/List';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShuffleIcon from '@mui/icons-material/Shuffle';
 import { RootState } from '@/store';
-
-const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 const RestaurantCard: React.FC<Restaurant> = ({
   id,
@@ -31,10 +35,6 @@ const RestaurantCard: React.FC<Restaurant> = ({
   const handleRemove = () => {
     dispatch(removeRestaurant(id));
   };
-
-  //   const imageSrc = photo
-  //     ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=${API_KEY}`
-  //     : 'https://via.placeholder.com/200x200';
 
   return (
     <StyledCard>
@@ -56,14 +56,6 @@ const RestaurantCard: React.FC<Restaurant> = ({
         <Grid item xs={12}>
           <Typography variant="body2">{address}</Typography>
         </Grid>
-        {/* might remove this, check with billing if it matters */}
-        {/* <Grid item xs={12}>
-          <img
-            src={imageSrc}
-            alt={`placePhoto-${name}`}
-            style={{ width: '100%', height: '200px', objectFit: 'cover' }}
-          />
-        </Grid> */}
       </Grid>
     </StyledCard>
   );
@@ -75,6 +67,10 @@ const RestaurantControls: React.FC = () => {
 
   const handleChangeView = (view: 'simple' | 'details') => {
     dispatch(setView(view));
+  };
+
+  const handleShuffle = () => {
+    dispatch(shuffleRestaurants());
   };
 
   return (
@@ -95,6 +91,15 @@ const RestaurantControls: React.FC = () => {
           <ListIcon />
         </IconButton>
       </Tooltip>
+      <Button
+        variant="outlined"
+        color="secondary"
+        startIcon={<ShuffleIcon />}
+        onClick={handleShuffle}
+        fullWidth
+      >
+        Shuffle
+      </Button>
     </Stack>
   );
 };

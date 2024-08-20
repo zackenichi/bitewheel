@@ -34,6 +34,8 @@ export async function GET(request: Request) {
             name: place.name,
             address: place.vicinity,
             rating: place.rating,
+            lat: place.geometry.location.lat,
+            lng: place.geometry.location.lng,
             photo: photoReference,
           };
         });
