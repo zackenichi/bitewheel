@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Typography, CircularProgress } from '@mui/material';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { RootState } from '@redux/store';
 
 const Location: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
@@ -48,4 +48,4 @@ const Location: React.FC = () => {
   );
 };
 
-export { Location };
+export default Location;

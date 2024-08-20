@@ -7,15 +7,15 @@ import {
   Typography,
 } from '@mui/material';
 import { FC } from 'react';
-import { useIsSmallScreen } from '../../hooks/useIsSmallScreen';
+import { useIsSmallScreen } from '@hooks/useIsSmallScreen';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/store';
+import { RootState } from '@redux/store';
 import {
   removeRestaurantFromList,
   setShowRestaurant,
-} from '@/store/restaurant';
-import { exclamations } from '@/resources/content/winner';
+} from '@/redux/restaurant';
+import { exclamations } from '@resources/content/winner';
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
@@ -121,4 +121,4 @@ const SelectedRestaurant: FC = () => {
   );
 };
 
-export { SelectedRestaurant };
+export default SelectedRestaurant;

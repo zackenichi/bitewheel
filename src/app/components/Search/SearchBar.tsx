@@ -10,9 +10,9 @@ import {
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedPlace } from '@/store/map'; // Import the action
+import { setSelectedPlace } from '@/redux/map'; // Import the action
 import _debounce from 'lodash/debounce';
-import { RootState } from '@/store'; // Import RootState type
+import { RootState } from '@redux/store'; // Import RootState type
 import Link from 'next/link';
 
 const SEARCH_ENDPOINT = '/api/autocomplete'; // Updated endpoint

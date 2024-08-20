@@ -4,9 +4,9 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme';
-import Header from '@/components/Header';
+import Header from '@/app/components/Header';
 import { Provider } from 'react-redux';
-import { store } from '@/store'; // Adjust the path according to your structure
+import { store } from '@redux/store';
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
