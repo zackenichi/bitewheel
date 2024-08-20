@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
-import { SearchBar } from '@/components/Search';
+import { Container, Typography, Box } from '@mui/material';
+import SearchBar from '@/components/Search/SearchBar';
 import { Location } from '@/components/Location';
 // import Link from 'next/link';
 

@@ -30,4 +30,4 @@ const ScrollWrap: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export { ScrollWrap };
+export default ScrollWrap;
