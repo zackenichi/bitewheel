@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
-import SearchBar from '@/components/Search/SearchBar';
-import { Location } from '@/components/Location';
+import SearchBar from '@/app/components/Search/SearchBar';
+import Location from '@/app/components/Location';
 // import Link from 'next/link';
 
 export default function HomePage() {

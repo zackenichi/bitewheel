@@ -6,23 +6,22 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Grid, Typography } from '@mui/material';
 
-import { setRestaurants } from '@/store/restaurant';
-import { RootState } from '@/store';
+import { setRestaurants } from '@/redux/restaurant';
+import { RootState } from '@redux/store';
 
-const SearchBar = dynamic(() => import('@/components/Search/SearchBar'), {
+const SearchBar = dynamic(() => import('@/app/components/Search/SearchBar'), {
   ssr: false,
 });
-const Restaurants = dynamic(() => import('@/components/Restaurants'), {
+const Restaurants = dynamic(() => import('./_components/Restaurants'), {
   ssr: false,
 });
-const Roulette = dynamic(() => import('@/components/Roulette'), { ssr: false });
-const EmptyList = dynamic(() => import('@/components/UI/'), { ssr: false });
-const LinearBuffer = dynamic(() => import('@/components/UI/'), { ssr: false });
+const Roulette = dynamic(() => import('./_components/Roulette'), {
+  ssr: false,
+});
+const EmptyList = dynamic(() => import('./_components/ui'), { ssr: false });
+const LinearBuffer = dynamic(() => import('./_components/ui'), { ssr: false });
 const SelectedRestaurant = dynamic(
-  () =>
-    import('@/components/SelectedRestaurant').then(
-      (mod) => mod.SelectedRestaurant
-    ),
+  () => import('./_components/SelectedRestaurant'),
   { ssr: false }
 );
 

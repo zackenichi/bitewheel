@@ -8,20 +8,20 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { CardDivider, StyledCard } from '../UI';
+import { CardDivider, StyledCard } from './ui';
 import { Restaurant } from '@/resources/interfaces/restaurant';
-import ScrollWrap from '@/components/ScrollWrap';
+import ScrollWrap from './ScrollWrap';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   removeRestaurant,
   setView,
   shuffleRestaurants,
-} from '@/store/restaurant';
+} from '@/redux/restaurant';
 import ListIcon from '@mui/icons-material/List';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
-import { RootState } from '@/store';
+import { RootState } from '@redux/store';
 
 const RestaurantCard: React.FC<Restaurant> = ({
   id,
